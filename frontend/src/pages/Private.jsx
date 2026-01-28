@@ -18,7 +18,7 @@ export default function Private() {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/private",{
+        const response = await fetch("http://localhost:3000/protected/private",{
           headers: {
             Authorization:`Bearer ${token}`,
           },

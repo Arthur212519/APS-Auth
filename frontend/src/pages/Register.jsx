@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Cadastro() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ export default function Cadastro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password || !confirmPassword) {
+    if (!username || !password || !confirmPassword || !email) {
       setMessage("Preencha todos os campos");
       return;
     }
@@ -24,7 +25,7 @@ export default function Cadastro() {
       setLoading(true);
       setMessage("");
 
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,6 +33,7 @@ export default function Cadastro() {
         body: JSON.stringify({
           username,
           password,
+          email,
         }),
       });
 
@@ -46,6 +48,7 @@ export default function Cadastro() {
       setUsername("");
       setPassword("");
       setConfirmPassword("");
+      setEmail("");
     } catch (err) {
       setMessage("Erro de conexão com o servidor");
     } finally {
@@ -67,6 +70,16 @@ export default function Cadastro() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring"
           />
         </div>
