@@ -6,12 +6,8 @@ const router = Router();
 
 router.get(
     '/private',
-    authenticateToken,
+    authenticateToken,authorizeRole('admin'),
     (req, res) => {
-        if (req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'usuario não autorizado' });
-        }
-
         res.status(200).json({ message: 'voce está na rota privada' });
     }
 );
@@ -19,7 +15,6 @@ router.get(
 router.get(
     '/protected',
     authenticateToken,
-    authorizeRole('user'),
     (req, res) => {
         res.status(200).json({ message: 'bem vindo a rota protegida!' });
     }

@@ -44,6 +44,14 @@ export default function Protected() {
       <h1 className="text-3xl font-bold">
         Área Protegida (usuário autenticado)
       </h1>
+
+      <button
+        onClick={() => navigate('/private')}
+        className="px-6 py-2 rounded bg-blue-600 hover:bg-blue-700 transition"
+      >
+        Ir para área privada (admin)
+      </button>
+      
     </div>
   );
     

@@ -1,13 +1,26 @@
 import { loginLimiter } from "../middlewares/rateLimit.js";
 import { Router } from "express";
+import { login, register } from "../controllers/auth.controller.js";
+/*
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import { pool } from "../db/index.js";
+*/
 
 
 const router = Router();
-//login
-router.post('/login', loginLimiter, async (req, res) => {
+
+router.post('/login', loginLimiter, login);
+router.post('/register', register);
+
+
+
+
+
+
+
+
+/*router.post('/login', loginLimiter, async (req, res) => {
     const { username, password } = req.body;
 
     //checar se existe no banco o username e a senha
@@ -15,11 +28,17 @@ router.post('/login', loginLimiter, async (req, res) => {
         return res.status(400).json({ message: 'dados inválidos' });
     }
 
-    const result = await pool.query("SELECT id, username, password_hash, role FROM users WHERE username = $1",
-        [username]
-    );
+    let result ;
 
-    const user = result.rows[0];
+    try {
+          result = await pool.query("SELECT id, username, password_hash, role FROM users WHERE username = $1",
+         [username]
+        );
+    } catch (err){
+        return res.status(500).json({message:"erro no banco de dados"})
+    }
+    
+     const user =  result.rows[0];
 
     if (!user) {
         return res.status(401).json({ message: "usuário ou senha inválido" });
@@ -75,6 +94,6 @@ router.post('/register', async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: 'erro interno do servidor' });
     }
-});
+});*/
 
 export default router;
